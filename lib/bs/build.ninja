@@ -48,29 +48,34 @@ build src/svclayer/WidgetSvc.mlast.d : build_deps src/svclayer/WidgetSvc.mlast
 build src/svclayer/WidgetSvc-Iconixfw.cmj |  $src_root_dir/lib/js/src/svclayer/WidgetSvc.bs.js src/svclayer/WidgetSvc-Iconixfw.cmi : build_cmj_cmi src/svclayer/WidgetSvc.mlast
   bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
   bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/svclayer
-build src/cli/Cli.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/cli/Cli.re
-build src/cli/Cli.mlast.d : build_deps src/cli/Cli.mlast
-build src/cli/Cli-Iconixfw.cmj |  $src_root_dir/lib/js/src/cli/Cli.bs.js src/cli/Cli-Iconixfw.cmi : build_cmj_cmi src/cli/Cli.mlast
-  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
-  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/cli
 rule build_ast_and_module_sets_from_rei
   command = ${bsc} -pp "${refmt} ${refmt_flags}" ${reason_react_jsx} ${ppx_flags} ${warnings} ${bsc_flags}  -c -o ${out} -bs-syntax-only -bs-binary-ast -intf ${in}
   description = [34mBuilding[39m [2m${out}[22m
-build src/cli/CliLib.mliast : build_ast_and_module_sets_from_rei $src_root_dir/src/cli/CliLib.rei
-build src/cli/CliLib.mliast.d : build_deps src/cli/CliLib.mliast
+build src/cli/Cli.mliast : build_ast_and_module_sets_from_rei $src_root_dir/src/cli/Cli.rei
+build src/cli/Cli.mliast.d : build_deps src/cli/Cli.mliast
 rule build_cmi
   command = ${bsc} ${bs_package_flags} -bs-no-builtin-ppx-mli -bs-no-implicit-include ${bs_package_includes} ${bsc_lib_includes} ${bsc_extra_includes} ${warnings} ${bsc_flags} -o ${out} -c  ${in}
   depfile = ${in}.d
   description = [34mBuilding[39m [2m${out}[22m
+build src/cli/Cli-Iconixfw.cmi : build_cmi src/cli/Cli.mliast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/cli
+build src/cli/Cli.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/cli/Cli.re
+build src/cli/Cli.mlast.d : build_deps src/cli/Cli.mlast
+rule build_cmj_only
+  command = ${bsc} ${bs_package_flags} -bs-assume-has-mli -bs-no-builtin-ppx-ml -bs-no-implicit-include  ${bs_package_includes} ${bsc_lib_includes} ${bsc_extra_includes} ${warnings} ${bsc_flags} -o ${out} -c  ${in} $postbuild
+  depfile = ${in}.d
+  description = [34mBuilding[39m [2m${out}[22m
+build src/cli/Cli-Iconixfw.cmj |  $src_root_dir/lib/js/src/cli/Cli.bs.js : build_cmj_only src/cli/Cli.mlast |  src/cli/Cli-Iconixfw.cmi
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/cli
+build src/cli/CliLib.mliast : build_ast_and_module_sets_from_rei $src_root_dir/src/cli/CliLib.rei
+build src/cli/CliLib.mliast.d : build_deps src/cli/CliLib.mliast
 build src/cli/CliLib-Iconixfw.cmi : build_cmi src/cli/CliLib.mliast
   bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
   bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/cli
 build src/cli/CliLib.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/cli/CliLib.re
 build src/cli/CliLib.mlast.d : build_deps src/cli/CliLib.mlast
-rule build_cmj_only
-  command = ${bsc} ${bs_package_flags} -bs-assume-has-mli -bs-no-builtin-ppx-ml -bs-no-implicit-include  ${bs_package_includes} ${bsc_lib_includes} ${bsc_extra_includes} ${warnings} ${bsc_flags} -o ${out} -c  ${in} $postbuild
-  depfile = ${in}.d
-  description = [34mBuilding[39m [2m${out}[22m
 build src/cli/CliLib-Iconixfw.cmj |  $src_root_dir/lib/js/src/cli/CliLib.bs.js : build_cmj_only src/cli/CliLib.mlast |  src/cli/CliLib-Iconixfw.cmi
   bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
   bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/cli
@@ -79,9 +84,14 @@ build src/cli/CliUtil.mlast.d : build_deps src/cli/CliUtil.mlast
 build src/cli/CliUtil-Iconixfw.cmj |  $src_root_dir/lib/js/src/cli/CliUtil.bs.js src/cli/CliUtil-Iconixfw.cmi : build_cmj_cmi src/cli/CliUtil.mlast
   bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
   bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/cli
+build src/cli/CmdShow.mliast : build_ast_and_module_sets_from_rei $src_root_dir/src/cli/CmdShow.rei
+build src/cli/CmdShow.mliast.d : build_deps src/cli/CmdShow.mliast
+build src/cli/CmdShow-Iconixfw.cmi : build_cmi src/cli/CmdShow.mliast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/cli
 build src/cli/CmdShow.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/cli/CmdShow.re
 build src/cli/CmdShow.mlast.d : build_deps src/cli/CmdShow.mlast
-build src/cli/CmdShow-Iconixfw.cmj |  $src_root_dir/lib/js/src/cli/CmdShow.bs.js src/cli/CmdShow-Iconixfw.cmi : build_cmj_cmi src/cli/CmdShow.mlast
+build src/cli/CmdShow-Iconixfw.cmj |  $src_root_dir/lib/js/src/cli/CmdShow.bs.js : build_cmj_only src/cli/CmdShow.mlast |  src/cli/CmdShow-Iconixfw.cmi
   bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
   bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/cli
 build src/cli/FakeFsm.mliast : build_ast_and_module_sets_from_rei $src_root_dir/src/cli/FakeFsm.rei
@@ -94,9 +104,14 @@ build src/cli/FakeFsm.mlast.d : build_deps src/cli/FakeFsm.mlast
 build src/cli/FakeFsm-Iconixfw.cmj |  $src_root_dir/lib/js/src/cli/FakeFsm.bs.js : build_cmj_only src/cli/FakeFsm.mlast |  src/cli/FakeFsm-Iconixfw.cmi
   bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
   bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/cli
+build src/cli/CmdLogin.mliast : build_ast_and_module_sets_from_rei $src_root_dir/src/cli/CmdLogin.rei
+build src/cli/CmdLogin.mliast.d : build_deps src/cli/CmdLogin.mliast
+build src/cli/CmdLogin-Iconixfw.cmi : build_cmi src/cli/CmdLogin.mliast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/cli
 build src/cli/CmdLogin.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/cli/CmdLogin.re
 build src/cli/CmdLogin.mlast.d : build_deps src/cli/CmdLogin.mlast
-build src/cli/CmdLogin-Iconixfw.cmj |  $src_root_dir/lib/js/src/cli/CmdLogin.bs.js src/cli/CmdLogin-Iconixfw.cmi : build_cmj_cmi src/cli/CmdLogin.mlast
+build src/cli/CmdLogin-Iconixfw.cmj |  $src_root_dir/lib/js/src/cli/CmdLogin.bs.js : build_cmj_only src/cli/CmdLogin.mlast |  src/cli/CmdLogin-Iconixfw.cmi
   bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
   bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/cli
 build src/cli/FakeDeps.mliast : build_ast_and_module_sets_from_rei $src_root_dir/src/cli/FakeDeps.rei
@@ -283,4 +298,4 @@ rule build_package
   command = ${bsc} -w -49 -no-alias-deps -c ${in}
   description = [34mBuilding[39m [2m${out}[22m
 build Iconixfw.cmi : build_package Iconixfw.mlmap
-build build.ninja : phony  ||  Iconixfw.cmi src/types/PrivilegeTypes.mlast.d src/types/ProcessTypes.mlast.d src/types/WidgetTypes.mlast.d src/types/AuthTypes.mlast.d src/types/SvcTypes.mlast.d src/types/Types.mlast.d src/framework/Fsm/TransactionFsm.mlast.d src/framework/Fsm/FsmGeneric.mlast.d src/framework/Fsm/Machine.mlast.d src/framework/parser/__test__/AllDefaultsTest.mlast.d src/framework/parser/__test__/SampleDefs.mlast.d src/framework/parser/__test__/ParserTest.mlast.d src/framework/parser/__test__/ParserExpt.mlast.d src/framework/parser/DomainDefaults.mlast.d src/framework/parser/FloFuture.mlast.d src/framework/parser/DefMapper.mlast.d src/framework/parser/codegen.mlast.d src/framework/parser/AstDump.mlast.d src/framework/parser/StrMap.mlast.d src/framework/parser/Parser.mlast.d src/framework/parser/Engine.mlast.d src/framework/parser/Domain.mlast.d src/framework/parser/Infix.mlast.d src/framework/parser/Fold.mlast.d src/framework/scratch/MyProcess.mlast.d src/framework/scratch/states.mlast.d src/framework/scratch/Steps.mlast.d src/framework/scratch/main.mlast.d src/framework/Util.mlast.d src/dblayer/Fake/DbTypes.mlast.d src/dblayer/Fake/Data.mlast.d src/dblayer/Fake/Db.mlast.d src/cli/CmdAddWidget.mlast.d src/cli/Readline.mlast.d src/cli/FakeDeps.mlast.d src/cli/FakeDeps.mliast.d src/cli/CmdLogin.mlast.d src/cli/FakeFsm.mlast.d src/cli/FakeFsm.mliast.d src/cli/CmdShow.mlast.d src/cli/CliUtil.mlast.d src/cli/CliLib.mlast.d src/cli/CliLib.mliast.d src/cli/Cli.mlast.d src/svclayer/WidgetSvc.mlast.d src/svclayer/AuthSvc.mlast.d src/processlayer/auth/FakePrivilegeChecker.mlast.d src/processlayer/auth/LoginProcess.mlast.d src/processlayer/GetWidgetProcess.mlast.d
+build build.ninja : phony  ||  Iconixfw.cmi src/types/PrivilegeTypes.mlast.d src/types/ProcessTypes.mlast.d src/types/WidgetTypes.mlast.d src/types/AuthTypes.mlast.d src/types/SvcTypes.mlast.d src/types/Types.mlast.d src/framework/Fsm/TransactionFsm.mlast.d src/framework/Fsm/FsmGeneric.mlast.d src/framework/Fsm/Machine.mlast.d src/framework/parser/__test__/AllDefaultsTest.mlast.d src/framework/parser/__test__/SampleDefs.mlast.d src/framework/parser/__test__/ParserTest.mlast.d src/framework/parser/__test__/ParserExpt.mlast.d src/framework/parser/DomainDefaults.mlast.d src/framework/parser/FloFuture.mlast.d src/framework/parser/DefMapper.mlast.d src/framework/parser/codegen.mlast.d src/framework/parser/AstDump.mlast.d src/framework/parser/StrMap.mlast.d src/framework/parser/Parser.mlast.d src/framework/parser/Engine.mlast.d src/framework/parser/Domain.mlast.d src/framework/parser/Infix.mlast.d src/framework/parser/Fold.mlast.d src/framework/scratch/MyProcess.mlast.d src/framework/scratch/states.mlast.d src/framework/scratch/Steps.mlast.d src/framework/scratch/main.mlast.d src/framework/Util.mlast.d src/dblayer/Fake/DbTypes.mlast.d src/dblayer/Fake/Data.mlast.d src/dblayer/Fake/Db.mlast.d src/cli/CmdAddWidget.mlast.d src/cli/Readline.mlast.d src/cli/FakeDeps.mlast.d src/cli/FakeDeps.mliast.d src/cli/CmdLogin.mlast.d src/cli/CmdLogin.mliast.d src/cli/FakeFsm.mlast.d src/cli/FakeFsm.mliast.d src/cli/CmdShow.mlast.d src/cli/CmdShow.mliast.d src/cli/CliUtil.mlast.d src/cli/CliLib.mlast.d src/cli/CliLib.mliast.d src/cli/Cli.mlast.d src/cli/Cli.mliast.d src/svclayer/WidgetSvc.mlast.d src/svclayer/AuthSvc.mlast.d src/processlayer/auth/FakePrivilegeChecker.mlast.d src/processlayer/auth/LoginProcess.mlast.d src/processlayer/GetWidgetProcess.mlast.d

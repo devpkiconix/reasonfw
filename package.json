@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "bs-fluture": "^0.4.1",
+    "fluture": "^10.3.1",
     "reason-future": "^2.3.1"
   }
 }
