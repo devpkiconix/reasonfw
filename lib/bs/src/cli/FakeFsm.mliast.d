@@ -1,0 +1,1 @@
+src/cli/FakeFsm-Iconixfw.cmi : src/framework/Fsm/FsmGeneric-Iconixfw.cmi src/framework/Fsm/TransactionFsm-Iconixfw.cmi

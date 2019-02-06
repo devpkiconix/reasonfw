@@ -1,0 +1,1 @@
+src/framework/scratch/main-Iconixfw.cmj : src/framework/scratch/MyProcess-Iconixfw.cmj src/framework/scratch/Steps-Iconixfw.cmj

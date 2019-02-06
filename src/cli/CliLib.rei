@@ -1,0 +1,1 @@
+let processLine: string => BsFluture.cancelJs;

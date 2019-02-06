@@ -1,0 +1,1 @@
+{ "dirs" : [ "src" , "src/processlayer" , "src/processlayer/auth" , "src/svclayer" , "src/cli" , "src/dblayer" , "src/dblayer/Fake" , "src/framework" , "src/framework/scratch" , "src/framework/parser" , "src/framework/parser/__test__" , "src/framework/Fsm" , "src/types" ] , "generated" : [] }

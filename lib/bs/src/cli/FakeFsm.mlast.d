@@ -1,0 +1,1 @@
+src/cli/FakeFsm-Iconixfw.cmj : src/framework/Fsm/FsmGeneric-Iconixfw.cmj src/framework/parser/Infix-Iconixfw.cmj src/framework/Fsm/TransactionFsm-Iconixfw.cmj src/types/Types-Iconixfw.cmj

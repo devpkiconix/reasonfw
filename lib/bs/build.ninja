@@ -1,0 +1,286 @@
+bs_package_flags = -bs-package-map iconixfw
+src_root_dir = /Users/work/dev/reasonfw
+bsc = /Users/work/dev/reasonfw/node_modules/bs-platform/lib/bsc.exe
+bsdep = /Users/work/dev/reasonfw/node_modules/bs-platform/lib/bsb_helper.exe
+warnings = -w -30-40+6+7+27+32..39+44+45+101 -warn-error +101
+bsc_flags = -bs-suffix -nostdlib -I '/Users/work/dev/reasonfw/node_modules/bs-platform/lib/ocaml' -color always
+ppx_flags = 
+bs_package_includes = -I /Users/work/dev/reasonfw/node_modules/bs-fluture/lib/ocaml -I /Users/work/dev/reasonfw/node_modules/reason-future/lib/ocaml
+bs_package_dev_includes = 
+namespace = -ns Iconixfw
+bsb_dir_group = 0
+refmt = /Users/work/dev/reasonfw/node_modules/bs-platform/lib/refmt.exe
+reason_react_jsx = 
+refmt_flags = --print binary
+bsc_lib_includes = -I . -I src/types -I src/framework/Fsm -I src/framework/parser/__test__ -I src/framework/parser -I src/framework/scratch -I src/framework -I src/dblayer/Fake -I src/cli -I src/svclayer -I src/processlayer/auth -I src/processlayer
+rule build_ast_and_module_sets_from_re
+  command = ${bsc} -pp "${refmt} ${refmt_flags}" ${reason_react_jsx}  ${ppx_flags} ${warnings} ${bsc_flags} -c -o ${out} -bs-syntax-only -bs-binary-ast -impl ${in}
+  description = [34mBuilding[39m [2m${out}[22m
+build src/processlayer/GetWidgetProcess.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/processlayer/GetWidgetProcess.re
+rule build_deps
+  command = ${bsdep} ${namespace} -g ${bsb_dir_group} -MD ${in}
+  description = [34mBuilding[39m [2m${out}[22m
+build src/processlayer/GetWidgetProcess.mlast.d : build_deps src/processlayer/GetWidgetProcess.mlast
+rule build_cmj_cmi
+  command = ${bsc} ${bs_package_flags} -bs-assume-no-mli -bs-no-builtin-ppx-ml -bs-no-implicit-include ${bs_package_includes} ${bsc_lib_includes} ${bsc_extra_includes} ${warnings} ${bsc_flags} -o ${out} -c  ${in} $postbuild
+  depfile = ${in}.d
+  description = [34mBuilding[39m [2m${out}[22m
+build src/processlayer/GetWidgetProcess-Iconixfw.cmj |  $src_root_dir/lib/js/src/processlayer/GetWidgetProcess.bs.js src/processlayer/GetWidgetProcess-Iconixfw.cmi : build_cmj_cmi src/processlayer/GetWidgetProcess.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/processlayer
+build src/processlayer/auth/LoginProcess.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/processlayer/auth/LoginProcess.re
+build src/processlayer/auth/LoginProcess.mlast.d : build_deps src/processlayer/auth/LoginProcess.mlast
+build src/processlayer/auth/LoginProcess-Iconixfw.cmj |  $src_root_dir/lib/js/src/processlayer/auth/LoginProcess.bs.js src/processlayer/auth/LoginProcess-Iconixfw.cmi : build_cmj_cmi src/processlayer/auth/LoginProcess.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/processlayer/auth
+build src/processlayer/auth/FakePrivilegeChecker.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/processlayer/auth/FakePrivilegeChecker.re
+build src/processlayer/auth/FakePrivilegeChecker.mlast.d : build_deps src/processlayer/auth/FakePrivilegeChecker.mlast
+build src/processlayer/auth/FakePrivilegeChecker-Iconixfw.cmj |  $src_root_dir/lib/js/src/processlayer/auth/FakePrivilegeChecker.bs.js src/processlayer/auth/FakePrivilegeChecker-Iconixfw.cmi : build_cmj_cmi src/processlayer/auth/FakePrivilegeChecker.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/processlayer/auth
+build src/svclayer/AuthSvc.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/svclayer/AuthSvc.re
+build src/svclayer/AuthSvc.mlast.d : build_deps src/svclayer/AuthSvc.mlast
+build src/svclayer/AuthSvc-Iconixfw.cmj |  $src_root_dir/lib/js/src/svclayer/AuthSvc.bs.js src/svclayer/AuthSvc-Iconixfw.cmi : build_cmj_cmi src/svclayer/AuthSvc.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/svclayer
+build src/svclayer/WidgetSvc.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/svclayer/WidgetSvc.re
+build src/svclayer/WidgetSvc.mlast.d : build_deps src/svclayer/WidgetSvc.mlast
+build src/svclayer/WidgetSvc-Iconixfw.cmj |  $src_root_dir/lib/js/src/svclayer/WidgetSvc.bs.js src/svclayer/WidgetSvc-Iconixfw.cmi : build_cmj_cmi src/svclayer/WidgetSvc.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/svclayer
+build src/cli/Cli.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/cli/Cli.re
+build src/cli/Cli.mlast.d : build_deps src/cli/Cli.mlast
+build src/cli/Cli-Iconixfw.cmj |  $src_root_dir/lib/js/src/cli/Cli.bs.js src/cli/Cli-Iconixfw.cmi : build_cmj_cmi src/cli/Cli.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/cli
+rule build_ast_and_module_sets_from_rei
+  command = ${bsc} -pp "${refmt} ${refmt_flags}" ${reason_react_jsx} ${ppx_flags} ${warnings} ${bsc_flags}  -c -o ${out} -bs-syntax-only -bs-binary-ast -intf ${in}
+  description = [34mBuilding[39m [2m${out}[22m
+build src/cli/CliLib.mliast : build_ast_and_module_sets_from_rei $src_root_dir/src/cli/CliLib.rei
+build src/cli/CliLib.mliast.d : build_deps src/cli/CliLib.mliast
+rule build_cmi
+  command = ${bsc} ${bs_package_flags} -bs-no-builtin-ppx-mli -bs-no-implicit-include ${bs_package_includes} ${bsc_lib_includes} ${bsc_extra_includes} ${warnings} ${bsc_flags} -o ${out} -c  ${in}
+  depfile = ${in}.d
+  description = [34mBuilding[39m [2m${out}[22m
+build src/cli/CliLib-Iconixfw.cmi : build_cmi src/cli/CliLib.mliast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/cli
+build src/cli/CliLib.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/cli/CliLib.re
+build src/cli/CliLib.mlast.d : build_deps src/cli/CliLib.mlast
+rule build_cmj_only
+  command = ${bsc} ${bs_package_flags} -bs-assume-has-mli -bs-no-builtin-ppx-ml -bs-no-implicit-include  ${bs_package_includes} ${bsc_lib_includes} ${bsc_extra_includes} ${warnings} ${bsc_flags} -o ${out} -c  ${in} $postbuild
+  depfile = ${in}.d
+  description = [34mBuilding[39m [2m${out}[22m
+build src/cli/CliLib-Iconixfw.cmj |  $src_root_dir/lib/js/src/cli/CliLib.bs.js : build_cmj_only src/cli/CliLib.mlast |  src/cli/CliLib-Iconixfw.cmi
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/cli
+build src/cli/CliUtil.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/cli/CliUtil.re
+build src/cli/CliUtil.mlast.d : build_deps src/cli/CliUtil.mlast
+build src/cli/CliUtil-Iconixfw.cmj |  $src_root_dir/lib/js/src/cli/CliUtil.bs.js src/cli/CliUtil-Iconixfw.cmi : build_cmj_cmi src/cli/CliUtil.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/cli
+build src/cli/CmdShow.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/cli/CmdShow.re
+build src/cli/CmdShow.mlast.d : build_deps src/cli/CmdShow.mlast
+build src/cli/CmdShow-Iconixfw.cmj |  $src_root_dir/lib/js/src/cli/CmdShow.bs.js src/cli/CmdShow-Iconixfw.cmi : build_cmj_cmi src/cli/CmdShow.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/cli
+build src/cli/FakeFsm.mliast : build_ast_and_module_sets_from_rei $src_root_dir/src/cli/FakeFsm.rei
+build src/cli/FakeFsm.mliast.d : build_deps src/cli/FakeFsm.mliast
+build src/cli/FakeFsm-Iconixfw.cmi : build_cmi src/cli/FakeFsm.mliast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/cli
+build src/cli/FakeFsm.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/cli/FakeFsm.re
+build src/cli/FakeFsm.mlast.d : build_deps src/cli/FakeFsm.mlast
+build src/cli/FakeFsm-Iconixfw.cmj |  $src_root_dir/lib/js/src/cli/FakeFsm.bs.js : build_cmj_only src/cli/FakeFsm.mlast |  src/cli/FakeFsm-Iconixfw.cmi
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/cli
+build src/cli/CmdLogin.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/cli/CmdLogin.re
+build src/cli/CmdLogin.mlast.d : build_deps src/cli/CmdLogin.mlast
+build src/cli/CmdLogin-Iconixfw.cmj |  $src_root_dir/lib/js/src/cli/CmdLogin.bs.js src/cli/CmdLogin-Iconixfw.cmi : build_cmj_cmi src/cli/CmdLogin.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/cli
+build src/cli/FakeDeps.mliast : build_ast_and_module_sets_from_rei $src_root_dir/src/cli/FakeDeps.rei
+build src/cli/FakeDeps.mliast.d : build_deps src/cli/FakeDeps.mliast
+build src/cli/FakeDeps-Iconixfw.cmi : build_cmi src/cli/FakeDeps.mliast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/cli
+build src/cli/FakeDeps.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/cli/FakeDeps.re
+build src/cli/FakeDeps.mlast.d : build_deps src/cli/FakeDeps.mlast
+build src/cli/FakeDeps-Iconixfw.cmj |  $src_root_dir/lib/js/src/cli/FakeDeps.bs.js : build_cmj_only src/cli/FakeDeps.mlast |  src/cli/FakeDeps-Iconixfw.cmi
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/cli
+build src/cli/Readline.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/cli/Readline.re
+build src/cli/Readline.mlast.d : build_deps src/cli/Readline.mlast
+build src/cli/Readline-Iconixfw.cmj |  $src_root_dir/lib/js/src/cli/Readline.bs.js src/cli/Readline-Iconixfw.cmi : build_cmj_cmi src/cli/Readline.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/cli
+build src/cli/CmdAddWidget.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/cli/CmdAddWidget.re
+build src/cli/CmdAddWidget.mlast.d : build_deps src/cli/CmdAddWidget.mlast
+build src/cli/CmdAddWidget-Iconixfw.cmj |  $src_root_dir/lib/js/src/cli/CmdAddWidget.bs.js src/cli/CmdAddWidget-Iconixfw.cmi : build_cmj_cmi src/cli/CmdAddWidget.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/cli
+build src/dblayer/Fake/Db.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/dblayer/Fake/Db.re
+build src/dblayer/Fake/Db.mlast.d : build_deps src/dblayer/Fake/Db.mlast
+build src/dblayer/Fake/Db-Iconixfw.cmj |  $src_root_dir/lib/js/src/dblayer/Fake/Db.bs.js src/dblayer/Fake/Db-Iconixfw.cmi : build_cmj_cmi src/dblayer/Fake/Db.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/dblayer/Fake
+build src/dblayer/Fake/Data.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/dblayer/Fake/Data.re
+build src/dblayer/Fake/Data.mlast.d : build_deps src/dblayer/Fake/Data.mlast
+build src/dblayer/Fake/Data-Iconixfw.cmj |  $src_root_dir/lib/js/src/dblayer/Fake/Data.bs.js src/dblayer/Fake/Data-Iconixfw.cmi : build_cmj_cmi src/dblayer/Fake/Data.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/dblayer/Fake
+build src/dblayer/Fake/DbTypes.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/dblayer/Fake/DbTypes.re
+build src/dblayer/Fake/DbTypes.mlast.d : build_deps src/dblayer/Fake/DbTypes.mlast
+build src/dblayer/Fake/DbTypes-Iconixfw.cmj |  $src_root_dir/lib/js/src/dblayer/Fake/DbTypes.bs.js src/dblayer/Fake/DbTypes-Iconixfw.cmi : build_cmj_cmi src/dblayer/Fake/DbTypes.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/dblayer/Fake
+build src/framework/Util.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/framework/Util.re
+build src/framework/Util.mlast.d : build_deps src/framework/Util.mlast
+build src/framework/Util-Iconixfw.cmj |  $src_root_dir/lib/js/src/framework/Util.bs.js src/framework/Util-Iconixfw.cmi : build_cmj_cmi src/framework/Util.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/framework
+build src/framework/scratch/main.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/framework/scratch/main.re
+build src/framework/scratch/main.mlast.d : build_deps src/framework/scratch/main.mlast
+build src/framework/scratch/main-Iconixfw.cmj |  $src_root_dir/lib/js/src/framework/scratch/main.bs.js src/framework/scratch/main-Iconixfw.cmi : build_cmj_cmi src/framework/scratch/main.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/framework/scratch
+build src/framework/scratch/Steps.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/framework/scratch/Steps.re
+build src/framework/scratch/Steps.mlast.d : build_deps src/framework/scratch/Steps.mlast
+build src/framework/scratch/Steps-Iconixfw.cmj |  $src_root_dir/lib/js/src/framework/scratch/Steps.bs.js src/framework/scratch/Steps-Iconixfw.cmi : build_cmj_cmi src/framework/scratch/Steps.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/framework/scratch
+build src/framework/scratch/states.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/framework/scratch/states.re
+build src/framework/scratch/states.mlast.d : build_deps src/framework/scratch/states.mlast
+build src/framework/scratch/states-Iconixfw.cmj |  $src_root_dir/lib/js/src/framework/scratch/states.bs.js src/framework/scratch/states-Iconixfw.cmi : build_cmj_cmi src/framework/scratch/states.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/framework/scratch
+build src/framework/scratch/MyProcess.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/framework/scratch/MyProcess.re
+build src/framework/scratch/MyProcess.mlast.d : build_deps src/framework/scratch/MyProcess.mlast
+build src/framework/scratch/MyProcess-Iconixfw.cmj |  $src_root_dir/lib/js/src/framework/scratch/MyProcess.bs.js src/framework/scratch/MyProcess-Iconixfw.cmi : build_cmj_cmi src/framework/scratch/MyProcess.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/framework/scratch
+build src/framework/parser/Fold.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/framework/parser/Fold.re
+build src/framework/parser/Fold.mlast.d : build_deps src/framework/parser/Fold.mlast
+build src/framework/parser/Fold-Iconixfw.cmj |  $src_root_dir/lib/js/src/framework/parser/Fold.bs.js src/framework/parser/Fold-Iconixfw.cmi : build_cmj_cmi src/framework/parser/Fold.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/framework/parser
+build src/framework/parser/Infix.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/framework/parser/Infix.re
+build src/framework/parser/Infix.mlast.d : build_deps src/framework/parser/Infix.mlast
+build src/framework/parser/Infix-Iconixfw.cmj |  $src_root_dir/lib/js/src/framework/parser/Infix.bs.js src/framework/parser/Infix-Iconixfw.cmi : build_cmj_cmi src/framework/parser/Infix.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/framework/parser
+build src/framework/parser/Domain.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/framework/parser/Domain.re
+build src/framework/parser/Domain.mlast.d : build_deps src/framework/parser/Domain.mlast
+build src/framework/parser/Domain-Iconixfw.cmj |  $src_root_dir/lib/js/src/framework/parser/Domain.bs.js src/framework/parser/Domain-Iconixfw.cmi : build_cmj_cmi src/framework/parser/Domain.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/framework/parser
+build src/framework/parser/Engine.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/framework/parser/Engine.re
+build src/framework/parser/Engine.mlast.d : build_deps src/framework/parser/Engine.mlast
+build src/framework/parser/Engine-Iconixfw.cmj |  $src_root_dir/lib/js/src/framework/parser/Engine.bs.js src/framework/parser/Engine-Iconixfw.cmi : build_cmj_cmi src/framework/parser/Engine.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/framework/parser
+build src/framework/parser/Parser.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/framework/parser/Parser.re
+build src/framework/parser/Parser.mlast.d : build_deps src/framework/parser/Parser.mlast
+build src/framework/parser/Parser-Iconixfw.cmj |  $src_root_dir/lib/js/src/framework/parser/Parser.bs.js src/framework/parser/Parser-Iconixfw.cmi : build_cmj_cmi src/framework/parser/Parser.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/framework/parser
+build src/framework/parser/StrMap.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/framework/parser/StrMap.re
+build src/framework/parser/StrMap.mlast.d : build_deps src/framework/parser/StrMap.mlast
+build src/framework/parser/StrMap-Iconixfw.cmj |  $src_root_dir/lib/js/src/framework/parser/StrMap.bs.js src/framework/parser/StrMap-Iconixfw.cmi : build_cmj_cmi src/framework/parser/StrMap.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/framework/parser
+build src/framework/parser/AstDump.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/framework/parser/AstDump.re
+build src/framework/parser/AstDump.mlast.d : build_deps src/framework/parser/AstDump.mlast
+build src/framework/parser/AstDump-Iconixfw.cmj |  $src_root_dir/lib/js/src/framework/parser/AstDump.bs.js src/framework/parser/AstDump-Iconixfw.cmi : build_cmj_cmi src/framework/parser/AstDump.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/framework/parser
+build src/framework/parser/codegen.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/framework/parser/codegen.re
+build src/framework/parser/codegen.mlast.d : build_deps src/framework/parser/codegen.mlast
+build src/framework/parser/codegen-Iconixfw.cmj |  $src_root_dir/lib/js/src/framework/parser/codegen.bs.js src/framework/parser/codegen-Iconixfw.cmi : build_cmj_cmi src/framework/parser/codegen.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/framework/parser
+build src/framework/parser/DefMapper.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/framework/parser/DefMapper.re
+build src/framework/parser/DefMapper.mlast.d : build_deps src/framework/parser/DefMapper.mlast
+build src/framework/parser/DefMapper-Iconixfw.cmj |  $src_root_dir/lib/js/src/framework/parser/DefMapper.bs.js src/framework/parser/DefMapper-Iconixfw.cmi : build_cmj_cmi src/framework/parser/DefMapper.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/framework/parser
+build src/framework/parser/FloFuture.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/framework/parser/FloFuture.re
+build src/framework/parser/FloFuture.mlast.d : build_deps src/framework/parser/FloFuture.mlast
+build src/framework/parser/FloFuture-Iconixfw.cmj |  $src_root_dir/lib/js/src/framework/parser/FloFuture.bs.js src/framework/parser/FloFuture-Iconixfw.cmi : build_cmj_cmi src/framework/parser/FloFuture.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/framework/parser
+build src/framework/parser/DomainDefaults.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/framework/parser/DomainDefaults.re
+build src/framework/parser/DomainDefaults.mlast.d : build_deps src/framework/parser/DomainDefaults.mlast
+build src/framework/parser/DomainDefaults-Iconixfw.cmj |  $src_root_dir/lib/js/src/framework/parser/DomainDefaults.bs.js src/framework/parser/DomainDefaults-Iconixfw.cmi : build_cmj_cmi src/framework/parser/DomainDefaults.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/framework/parser
+build src/framework/parser/__test__/ParserExpt.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/framework/parser/__test__/ParserExpt.re
+build src/framework/parser/__test__/ParserExpt.mlast.d : build_deps src/framework/parser/__test__/ParserExpt.mlast
+build src/framework/parser/__test__/ParserExpt-Iconixfw.cmj |  $src_root_dir/lib/js/src/framework/parser/__test__/ParserExpt.bs.js src/framework/parser/__test__/ParserExpt-Iconixfw.cmi : build_cmj_cmi src/framework/parser/__test__/ParserExpt.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/framework/parser/__test__
+build src/framework/parser/__test__/ParserTest.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/framework/parser/__test__/ParserTest.re
+build src/framework/parser/__test__/ParserTest.mlast.d : build_deps src/framework/parser/__test__/ParserTest.mlast
+build src/framework/parser/__test__/ParserTest-Iconixfw.cmj |  $src_root_dir/lib/js/src/framework/parser/__test__/ParserTest.bs.js src/framework/parser/__test__/ParserTest-Iconixfw.cmi : build_cmj_cmi src/framework/parser/__test__/ParserTest.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/framework/parser/__test__
+build src/framework/parser/__test__/SampleDefs.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/framework/parser/__test__/SampleDefs.re
+build src/framework/parser/__test__/SampleDefs.mlast.d : build_deps src/framework/parser/__test__/SampleDefs.mlast
+build src/framework/parser/__test__/SampleDefs-Iconixfw.cmj |  $src_root_dir/lib/js/src/framework/parser/__test__/SampleDefs.bs.js src/framework/parser/__test__/SampleDefs-Iconixfw.cmi : build_cmj_cmi src/framework/parser/__test__/SampleDefs.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/framework/parser/__test__
+build src/framework/parser/__test__/AllDefaultsTest.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/framework/parser/__test__/AllDefaultsTest.re
+build src/framework/parser/__test__/AllDefaultsTest.mlast.d : build_deps src/framework/parser/__test__/AllDefaultsTest.mlast
+build src/framework/parser/__test__/AllDefaultsTest-Iconixfw.cmj |  $src_root_dir/lib/js/src/framework/parser/__test__/AllDefaultsTest.bs.js src/framework/parser/__test__/AllDefaultsTest-Iconixfw.cmi : build_cmj_cmi src/framework/parser/__test__/AllDefaultsTest.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/framework/parser/__test__
+build src/framework/Fsm/Machine.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/framework/Fsm/Machine.re
+build src/framework/Fsm/Machine.mlast.d : build_deps src/framework/Fsm/Machine.mlast
+build src/framework/Fsm/Machine-Iconixfw.cmj |  $src_root_dir/lib/js/src/framework/Fsm/Machine.bs.js src/framework/Fsm/Machine-Iconixfw.cmi : build_cmj_cmi src/framework/Fsm/Machine.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/framework/Fsm
+build src/framework/Fsm/FsmGeneric.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/framework/Fsm/FsmGeneric.re
+build src/framework/Fsm/FsmGeneric.mlast.d : build_deps src/framework/Fsm/FsmGeneric.mlast
+build src/framework/Fsm/FsmGeneric-Iconixfw.cmj |  $src_root_dir/lib/js/src/framework/Fsm/FsmGeneric.bs.js src/framework/Fsm/FsmGeneric-Iconixfw.cmi : build_cmj_cmi src/framework/Fsm/FsmGeneric.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/framework/Fsm
+build src/framework/Fsm/TransactionFsm.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/framework/Fsm/TransactionFsm.re
+build src/framework/Fsm/TransactionFsm.mlast.d : build_deps src/framework/Fsm/TransactionFsm.mlast
+build src/framework/Fsm/TransactionFsm-Iconixfw.cmj |  $src_root_dir/lib/js/src/framework/Fsm/TransactionFsm.bs.js src/framework/Fsm/TransactionFsm-Iconixfw.cmi : build_cmj_cmi src/framework/Fsm/TransactionFsm.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/framework/Fsm
+build src/types/Types.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/types/Types.re
+build src/types/Types.mlast.d : build_deps src/types/Types.mlast
+build src/types/Types-Iconixfw.cmj |  $src_root_dir/lib/js/src/types/Types.bs.js src/types/Types-Iconixfw.cmi : build_cmj_cmi src/types/Types.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/types
+build src/types/SvcTypes.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/types/SvcTypes.re
+build src/types/SvcTypes.mlast.d : build_deps src/types/SvcTypes.mlast
+build src/types/SvcTypes-Iconixfw.cmj |  $src_root_dir/lib/js/src/types/SvcTypes.bs.js src/types/SvcTypes-Iconixfw.cmi : build_cmj_cmi src/types/SvcTypes.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/types
+build src/types/AuthTypes.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/types/AuthTypes.re
+build src/types/AuthTypes.mlast.d : build_deps src/types/AuthTypes.mlast
+build src/types/AuthTypes-Iconixfw.cmj |  $src_root_dir/lib/js/src/types/AuthTypes.bs.js src/types/AuthTypes-Iconixfw.cmi : build_cmj_cmi src/types/AuthTypes.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/types
+build src/types/WidgetTypes.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/types/WidgetTypes.re
+build src/types/WidgetTypes.mlast.d : build_deps src/types/WidgetTypes.mlast
+build src/types/WidgetTypes-Iconixfw.cmj |  $src_root_dir/lib/js/src/types/WidgetTypes.bs.js src/types/WidgetTypes-Iconixfw.cmi : build_cmj_cmi src/types/WidgetTypes.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/types
+build src/types/ProcessTypes.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/types/ProcessTypes.re
+build src/types/ProcessTypes.mlast.d : build_deps src/types/ProcessTypes.mlast
+build src/types/ProcessTypes-Iconixfw.cmj |  $src_root_dir/lib/js/src/types/ProcessTypes.bs.js src/types/ProcessTypes-Iconixfw.cmi : build_cmj_cmi src/types/ProcessTypes.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/types
+build src/types/PrivilegeTypes.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/types/PrivilegeTypes.re
+build src/types/PrivilegeTypes.mlast.d : build_deps src/types/PrivilegeTypes.mlast
+build src/types/PrivilegeTypes-Iconixfw.cmj |  $src_root_dir/lib/js/src/types/PrivilegeTypes.bs.js src/types/PrivilegeTypes-Iconixfw.cmi : build_cmj_cmi src/types/PrivilegeTypes.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/types
+rule build_package
+  command = ${bsc} -w -49 -no-alias-deps -c ${in}
+  description = [34mBuilding[39m [2m${out}[22m
+build Iconixfw.cmi : build_package Iconixfw.mlmap
+build build.ninja : phony  ||  Iconixfw.cmi src/types/PrivilegeTypes.mlast.d src/types/ProcessTypes.mlast.d src/types/WidgetTypes.mlast.d src/types/AuthTypes.mlast.d src/types/SvcTypes.mlast.d src/types/Types.mlast.d src/framework/Fsm/TransactionFsm.mlast.d src/framework/Fsm/FsmGeneric.mlast.d src/framework/Fsm/Machine.mlast.d src/framework/parser/__test__/AllDefaultsTest.mlast.d src/framework/parser/__test__/SampleDefs.mlast.d src/framework/parser/__test__/ParserTest.mlast.d src/framework/parser/__test__/ParserExpt.mlast.d src/framework/parser/DomainDefaults.mlast.d src/framework/parser/FloFuture.mlast.d src/framework/parser/DefMapper.mlast.d src/framework/parser/codegen.mlast.d src/framework/parser/AstDump.mlast.d src/framework/parser/StrMap.mlast.d src/framework/parser/Parser.mlast.d src/framework/parser/Engine.mlast.d src/framework/parser/Domain.mlast.d src/framework/parser/Infix.mlast.d src/framework/parser/Fold.mlast.d src/framework/scratch/MyProcess.mlast.d src/framework/scratch/states.mlast.d src/framework/scratch/Steps.mlast.d src/framework/scratch/main.mlast.d src/framework/Util.mlast.d src/dblayer/Fake/DbTypes.mlast.d src/dblayer/Fake/Data.mlast.d src/dblayer/Fake/Db.mlast.d src/cli/CmdAddWidget.mlast.d src/cli/Readline.mlast.d src/cli/FakeDeps.mlast.d src/cli/FakeDeps.mliast.d src/cli/CmdLogin.mlast.d src/cli/FakeFsm.mlast.d src/cli/FakeFsm.mliast.d src/cli/CmdShow.mlast.d src/cli/CliUtil.mlast.d src/cli/CliLib.mlast.d src/cli/CliLib.mliast.d src/cli/Cli.mlast.d src/svclayer/WidgetSvc.mlast.d src/svclayer/AuthSvc.mlast.d src/processlayer/auth/FakePrivilegeChecker.mlast.d src/processlayer/auth/LoginProcess.mlast.d src/processlayer/GetWidgetProcess.mlast.d
